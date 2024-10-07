@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong spielen</title>
+    <link rel="stylesheet" href="../CSS/pong.css">
+    <link  href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+</head>
+<body>
+    
+    <a href="index.html"><img src="../Images/Pfeil.jpg" class="pfeil" alt=""></a>
+
+    <div class="navbar">
+        <h1>Pong - Eine gute Entscheidung</h1>
+    </div>
+    <div id="anzeigetafel">
+        <div id="statistik"></div>
+        <div id="spielverlauf"></div>
+    </div>
+    <div id="spielfeld">
+        <div id="ball"></div>
+        <div id="computer" class="spieler"></div>
+        <div id="mensch" class="spieler"></div>
+        <div id="mittellinie"></div>
+    </div>
+    
+    
+    
+    
+    <script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    
+    <script>
+    ////////////////////////////////////////////
+    // Einstellungen
+    ////////////////////////////////////////////
+    
+    // Das Spielfeld
+    var spielfeldBreite = 1200;
+    var spielfeldHoehe	= 600;
+    
+    
+    // Der Ball
+    var ballDurchmesser	= 20;
+    var winkel			= 60 + Math.floor( Math.random() * 15 );
+    var schrittWartezeit= 10;
+    var x 				= 0;
+    var y				= (spielfeldHoehe - ballDurchmesser ) / 2;
+    var dx; 
+    var dy;
+    var startSchrittweite = 4;
+    var schrittweite; // des Balles, wird vom Level bestimmt
+    
+    
+    // Die Spieler
+    var spielerHoehe	= 80;
+    var spielerSchrittweite = spielerHoehe / 2;
+    var menschY			= (spielfeldHoehe - spielerHoehe ) / 2;
+    var computerY		= menschY;
+    
+    // Das Spiel
+    var verlorenAnzahl 	= 0;
+    var spielLaeuft		= false;
+    var taktgeber;
+    var level 			= 1;
+    var levelDauer		= 10; // in Sekunden
+    var spielWort		= "Spiel";
+    
+    
+    // Die Zeit
+    var zeit;
+    var zeitStart;
+    var zeitEnde;
+    var dauer 			= 0;
+    var maxDauer 		= 0;
+    var sekunden 		= 0;
+    
+    
+    
+    
+    ////////////////////////////////////////////
+    // Das Spiel
+    ////////////////////////////////////////////
+    zeichneSpielfeld();
+    
+    function zeichneSpielfeld(){
+        $('#spielfeld').css({ width: spielfeldBreite + 'px', height: spielfeldHoehe + 'px'})
+        $('#mittellinie').css( {left: ( (spielfeldBreite / 2 ) - 2 )+ 'px'})
+        $('#ball').css({ width: ballDurchmesser + 'px', height: ballDurchmesser + 'px', top: computerY + 'px'})
+        $('.spieler').css({ height: spielerHoehe + 'px', top:  menschY + 'px' } )
+        $('#mensch').css( {left: (spielfeldBreite - 5 ) + 'px'})
+    }
+    
+    
+    function starteSpiel(){
+        if( !spielLaeuft ){
+            spielLaeuft = true;
+            setzeLevel();
+            taktgeber = window.setInterval( bewegen, schrittWartezeit );
+            x = schrittweite + 10;
+            y = computerY + ( spielerHoehe /2 );
+            $('#spielfeld').css({ background: 'Black'});
+            $('#mittellinie').html("");
+            zeit = new Date();
+            zeitStart = zeit.getTime();
+        }
+    }
+    
+    function bewegen(){
+        berechneNeueBallPosition();
+        setzeBall();
+        bewegeComputer();
+        istBallAmRand();
+        setzeLevel();
+        zeigeSpielverlauf();
+    }
+    
+    function setzeLevel(){
+        level =  1 + Math.floor( sekunden / levelDauer );
+        schrittweite = startSchrittweite + level - 1;
+    }
+    
+    function verloren(){
+        spielLaeuft	= false;
+        clearInterval( taktgeber );
+        verlorenAnzahl++;
+    
+        if( sekunden > maxDauer ) maxDauer = sekunden;
+    
+        anzeige( verlorenAnzahl, maxDauer );
+        $('#spielfeld').css({ background: 'Black'});
+        $('#mittellinie').html("<br/><p id='textverloren'>Sie haben verloren.<br/><br/>Drücken Sie eine beliebige Taste.<p/>");
+    
+        x = spielfeldBreite - ballDurchmesser;
+        setzeBall();
+    
+    }
+    
+    function anzeige( verlorenAnzahl, maxDauer ){
+        if (verlorenAnzahl == 2 ) spielWort = "Spiele";
+       
+    } 
+    
+    function zeigeSpielverlauf(  ){
+        zeit = new Date();
+        zeitEnde = zeit.getTime();
+        sekunden = Math.floor( ( zeitEnde - zeitStart ) / 1000 );
+        $('#spielverlauf').html(  sekunden + " Sekunden, Level " + level + ".");
+        $('#spielverlauf').css({ width: ( sekunden * 3 ) + 'px'});
+    } 
+    
+    
+    
+    
+    
+    
+    
+    ////////////////////////////////////////////
+    // Der menschliche Spieler
+    ////////////////////////////////////////////
+    $(document).keydown(function(e) {
+        switch( e.keyCode ){
+            case 38:
+                menschY -= spielerSchrittweite;
+                if(menschY <= 0) menschY = 0;
+                bewegeMensch();
+            break;
+            case 40:
+                menschY  += spielerSchrittweite;
+                if(menschY >= spielfeldHoehe - spielerHoehe) menschY = spielfeldHoehe - spielerHoehe;
+                bewegeMensch();
+            break;
+            default:
+                starteSpiel();
+          }
+    });
+    
+    
+    
+    function bewegeMensch(){
+        $('#mensch').css({
+            top:  menschY + 'px'
+        })
+    }
+    
+    
+    
+    ////////////////////////////////////////////
+    // Der Computer als Spieler
+    ////////////////////////////////////////////
+    function bewegeComputer(){
+        if( y > computerY + spielerHoehe ) computerY += spielerSchrittweite;
+        else if (y < computerY ) computerY -= spielerSchrittweite;
+    
+        if( computerY < 0 ) computerY = 0;
+        if( computerY > spielfeldHoehe - spielerHoehe ) computerY = spielfeldHoehe - spielerHoehe;
+        $('#computer').css({
+            top:  computerY + 'px'
+        })
+    }
+    
+    
+    
+    
+    ////////////////////////////////////////////
+    // Bewegung des Balles
+    ////////////////////////////////////////////
+    
+    function berechneNeueBallPosition( ){
+        dy 	= Math.sin( gradZuBogemass( winkel ) ) * schrittweite;
+        dx 	= Math.cos( gradZuBogemass( winkel ) ) * schrittweite;
+    
+        x  	+= dx;
+        y 	+= dy;
+    }
+    
+    function setzeBall(){
+        $('#ball').css({
+            left: x + 'px',
+            top:  y + 'px'
+        })
+    }
+    
+    function istBallAmRand(){
+        // Ist der Ball am rechten Rand ?
+        if ( x > spielfeldBreite - schrittweite - ballDurchmesser ){
+            if ( y < menschY - ballDurchmesser || y > menschY + spielerHoehe ){
+                verloren();
+            }		
+        }
+    
+        if( x < schrittweite || x > spielfeldBreite - schrittweite - ballDurchmesser ) pralleAb( "linksrechts");
+        if( y < schrittweite  || y > spielfeldHoehe - schrittweite - ballDurchmesser ) pralleAb( "obenunten");
+    
+    }
+    
+    function pralleAb( wo ){
+        // Einfallswinkel = Ausfallswinkel
+        switch( wo ){
+            case "linksrechts":
+                winkel =  -winkel;
+            break;	
+            case "obenunten":
+                winkel = 180 - winkel;
+            break;
+        }
+        winkel %= 360;
+        berechneNeueBallPosition();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    ////////////////////////////////////////////
+    // Hilfsfunktionen
+    ////////////////////////////////////////////
+    function gradZuBogemass( grad ){
+        return ( grad - 90 ) * Math.PI / 180;
+    }
+    
+    
+    </script>
+</body>
+<footer>
+    <p>© 2024 Joker Spielhalle</p>
+</footer>
+</html>

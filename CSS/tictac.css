@@ -1,0 +1,120 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--orange);
+    font-family: 'Finger Paint', cursive;
+    background-image: url('../Images/Spielo.jpg');
+   background-size: cover; /* Passt das Bild an, sodass es den gesamten Hintergrund bedeckt */
+    background-repeat: no-repeat; /*Verhindert das Wiederholen des Bildes */ 
+   background-position: center; /*Zentriert das Bild */ 
+}
+.pfeil{
+    width:6rem;
+    height:6rem;
+    z-index: 2;
+    position: absolute;
+    top: 0.2rem;
+    left: 2rem;
+}
+
+p {
+    font-family: 'Press Start 2P', cursive;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 35px;
+    text-align: center;
+}
+
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    text-transform: uppercase;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --orange: #F2C14E;
+    --winning-blocks: #2d414b;
+}
+
+.container {
+    padding: 40px;
+    width: 30rem;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: black;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    position: absolute;
+    top: 16.5rem;
+    left: 45rem;
+    border: 2px solid black;
+border-radius: 10px; /* applies to all four corners */
+}
+
+
+#gameboard {
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+.box {
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--orange);
+    font-size: 120px;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+}
+.box:nth-child(3n) {
+    border-right: none;
+}
+.box:nth-child(6) ~ .box {
+    border-bottom: none;
+} 
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: var(--orange);
+    color: #333;
+    border-color: var(--orange);
+    font-size: 18px;
+    transition: 200ms transform;
+    font-weight: 600;
+}
+button:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+}

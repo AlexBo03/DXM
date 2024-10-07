@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--orange);
+    font-family: 'Finger Paint', cursive;
+    background-image: url('../Images/Spielo.jpg');
+   background-size: cover; /* Passt das Bild an, sodass es den gesamten Hintergrund bedeckt */
+    background-repeat: no-repeat; /*Verhindert das Wiederholen des Bildes */ 
+   background-position: center; /*Zentriert das Bild */ 
+  
+}
+html, body {
+    height: 100%;
+    margin: 0;
+}
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 35px;
+    text-align: center;
+}
+.pfeil{
+    width:6rem;
+    height:6rem;
+    z-index: 2;
+    position: absolute;
+    top: 0.2rem;
+    left: 2rem;
+}
+canvas{
+    border-radius: 10px; /* applies to all four corners */
+    position: absolute;
+    left: 35rem;
+    top: 13rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    text-transform: uppercase;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}

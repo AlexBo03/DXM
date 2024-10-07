@@ -1,0 +1,104 @@
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    
+   margin: 0;
+   padding: 0;
+   background-image: url('../Images/Spielo.jpg');
+   background-size: cover; /* Passt das Bild an, sodass es den gesamten Hintergrund bedeckt */
+    background-repeat: no-repeat; /*Verhindert das Wiederholen des Bildes */ 
+   background-position: center; /*Zentriert das Bild */ 
+}
+#spielfeld{
+width: 1px;
+height: 1px;
+background-color: Black;
+position: absolute;
+cursor: none;
+left: 23rem;
+top:12rem;
+border: 2px solid black;
+border-radius: 10px; /* applies to all four corners */
+}
+#textverloren{
+    color: white;
+}
+#mittellinie{
+    border-left: 4px dashed white;
+    height: 100%;
+    position: absolute;
+    left: 1px;
+    padding: 0 2em 0 1em;
+}
+#anzeigetafel{
+    padding-bottom: 0.3em;
+    color: white;
+    position: absolute;
+    left: 50rem;
+    top:9rem;
+    font-size: large;
+   
+}
+.pfeil{
+    width:6rem;
+    height:6rem;
+    z-index: 2;
+    position: absolute;
+    top: 0.2rem;
+    left: 2rem;
+}
+#spielverlauf{
+    
+    white-space: nowrap;
+    width: 0px;
+}
+#ball{
+    border-radius: 400px;
+    width: 1px;
+    height: 1px;
+    background-color: white;
+    position:absolute;
+}
+.spieler{
+    background-color: blue;
+    width: 5px;
+    height: 1px;
+    top: 1px;
+    position: absolute;
+
+}
+#mensch{
+
+left: 1px;
+background-color: red;
+
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+h1{
+    font-family: 'Press Start 2P', cursive;
+    text-transform: uppercase;
+}
+p{
+    font-family: 'Press Start 2P', cursive;
+}
