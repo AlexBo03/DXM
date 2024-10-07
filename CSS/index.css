@@ -30,13 +30,21 @@ html, body {
     background-size: cover; /* Passt das Bild an, sodass es den gesamten Hintergrund bedeckt */
     background-repeat: no-repeat; /* Verhindert das Wiederholen des Bildes */
     background-position: center; /* Zentriert das Bild */
-    gap: 40px; /* Abstand zwischen den Reihen */
+    gap: 90px; /* Abstand zwischen den Reihen */
+}
+.pfeil{
+    width:10rem;
+    height:10rem;
+    z-index: 2;
+    position: absolute;
+    top: -1.5rem;
+    left: 2rem;
 }
 
 .game-row {
     display: flex;
     justify-content: center;
-    gap: 40px; /* Abstand zwischen den Spielen in einer Reihe */
+    gap: 140px; /* Abstand zwischen den Spielen in einer Reihe */
 }
 
 a, h2 {
@@ -45,36 +53,34 @@ a, h2 {
     font-family: 'Press Start 2P', cursive;
 }
 
-.pong {
-    height: 29rem;
-}
-
 .game {
     text-align: center;
     width: 45%;
     max-width: 600px; /* Maximale Breite der Spiele */
+    height: 350px; /* Einheitliche Höhe der Spiele */
+    
+    flex-direction: column;
+    justify-content: center;
 }
 
 .game img {
     width: 100%;
-    height: 300px; /* Einheitliche Höhe der Bilder */
+    height: 100%; /* Einheitliche Höhe der Bilder */
     object-fit: cover; /* Bild skalieren und zuschneiden, um die Höhe zu füllen */
     border-radius: 10px;
-}
-
-img {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 .image-container {
     position: relative;
     width: 100%;
+    height: 100%; /* Einheitliche Höhe der Container */
 }
 
 .image {
     display: block;
     width: 100%;
-    height: 300px; /* Einheitliche Höhe der Bilder */
+    height: 100%; /* Einheitliche Höhe der Bilder */
     object-fit: cover; /* Bild skalieren und zuschneiden, um die Höhe zu füllen */
     transition: filter 0.3s ease;
 }

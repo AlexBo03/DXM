@@ -5,11 +5,11 @@ h1{
     color: white;
 }
 .pfeil{
-    width:6rem;
-    height:6rem;
+    width:10rem;
+    height:10rem;
     z-index: 2;
     position: absolute;
-    top: 0.2rem;
+    top: -1.5rem;
     left: 2rem;
 }
 .navbar {
