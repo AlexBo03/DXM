@@ -1,10 +1,6 @@
 /* global stuff */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 
 
 body {
@@ -111,3 +107,25 @@ dialog.close {
         opacity: 0;
     }
 }
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  .navbar {
+    background-color: #333;
+    color: white;
+    padding: 30px;
+    text-align: center;
+    align-items: center;
+    width:10rem;
+  }

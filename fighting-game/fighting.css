@@ -1,0 +1,44 @@
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    text-transform: uppercase;
+}
+.pfeil{
+    width:10rem;
+    height:10rem;
+    z-index: 2;
+    position: absolute;
+    top: -1.5rem;
+    left: 2rem;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+body{
+    background-image: url('../Images/Spielo.jpg');
+    background-size: cover; /* Passt das Bild an, sodass es den gesamten Hintergrund bedeckt */
+    background-repeat: no-repeat; /* Verhindert das Wiederholen des Bildes */
+    background-position: center; /* Zentriert das Bild */
+    gap: 90px; /* Abstand zwischen den Reihen */
+}
+/* canvas{
+    position: absolute;
+    left:20rem;
+} */
