@@ -1,122 +1,189 @@
 import {
-    giveBishopHighlightIds,
-    giveRookCapturesIds,
-  } from "../Helper/commonHelper.js";
-  import { checkSquareCaptureId } from "../Helper/commonHelper.js";
-  import { checkPieceOfOpponentOnElement } from "../Helper/commonHelper.js";
-  import { giveKingCaptureIds } from "../Helper/commonHelper.js";
-  import { giveQueenCapturesIds } from "../Helper/commonHelper.js";
-  import { checkWeatherPieceExistsOrNot } from "../Helper/commonHelper.js";
-  import {
-    giveRookHighlightIds,
-    giveBishopCaptureIds,
-  } from "../Helper/commonHelper.js";
-  import { giveKnightCaptureIds } from "../Helper/commonHelper.js";
-  import {
-    giveKingHighlightIds,
-    giveKnightHighlightIds,
-  } from "../Helper/commonHelper.js";
-  import { giveQueenHighlightIds } from "../Helper/commonHelper.js";
-  import { ROOT_DIV } from "../Helper/constants.js";
-  import { clearHightlight } from "../Render/main.js";
-  import { selfHighlight } from "../Render/main.js";
-  import { globalStateRender } from "../Render/main.js";
-  import { globalState, keySquareMapper } from "../index.js";
-  import { globalPiece } from "../Render/main.js";
-  import pawnPromotion from "../Helper/modalCreator.js";
-  import HypotheticalClass from "../Others/HypotheticalBoard.js";
-  import HypotheticalBoard from "../Others/HypotheticalBoard.js";
-  
-  // hightlighted or not => state
-  let hightlight_state = false;
-  let inTurn = "white";
-  let whoInCheck = null;
-  
-  function changeTurn() {
-    inTurn = inTurn === "white" ? "black" : "white";
-  }
-  
-  function checkForCheck() {
-    if (inTurn === "black") {
-      const whiteKingCurrentPosition = globalPiece.white_king.current_position;
-      const knight_1 = globalPiece.black_knight_1.current_position;
-      const knight_2 = globalPiece.black_knight_2.current_position;
-      const king = globalPiece.black_king.current_position;
-      const bishop_1 = globalPiece.black_bishop_1.current_position;
-      const bishop_2 = globalPiece.black_bishop_2.current_position;
-      const rook_1 = globalPiece.black_rook_1.current_position;
-      const rook_2 = globalPiece.black_rook_2.current_position;
-      const queen = globalPiece.black_queen.current_position;
-  
-      let finalCheckList = [];
-      finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
-      finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
-      finalCheckList.push(giveKingCaptureIds(king, inTurn));
-      finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
-      finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
-      finalCheckList.push(giveRookCapturesIds(rook_1, inTurn));
-      finalCheckList.push(giveRookCapturesIds(rook_2, inTurn));
-      finalCheckList.push(giveQueenCapturesIds(queen, inTurn));
-  
-      finalCheckList = finalCheckList.flat();
-      const checkOrNot = finalCheckList.find(
-        (element) => element === whiteKingCurrentPosition
-      );
-  
-      if (checkOrNot) {
-        whoInCheck = "white";
-      }
-    } else {
-      const blackKingCurrentPosition = globalPiece.black_king.current_position;
-      const knight_1 = globalPiece.white_knight_1.current_position;
-      const knight_2 = globalPiece.white_knight_2.current_position;
-      const king = globalPiece.white_king.current_position;
-      const bishop_1 = globalPiece.white_bishop_1.current_position;
-      const bishop_2 = globalPiece.white_bishop_2.current_position;
-      const rook_1 = globalPiece.white_rook_1.current_position;
-      const rook_2 = globalPiece.white_rook_2.current_position;
-      const queen = globalPiece.white_queen.current_position;
-  
-      let finalCheckList = [];
-      finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
-      finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
-      finalCheckList.push(giveKingCaptureIds(king, inTurn));
-      finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
-      finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
-      finalCheckList.push(giveRookCapturesIds(rook_1, inTurn));
-      finalCheckList.push(giveRookCapturesIds(rook_2, inTurn));
-      finalCheckList.push(giveQueenCapturesIds(queen, inTurn));
-  
-      finalCheckList = finalCheckList.flat();
-      const checkOrNot = finalCheckList.find(
-        (element) => element === blackKingCurrentPosition
-      );
-  
-      if (checkOrNot) {
-        whoInCheck = "black";
-      }
+  giveBishopHighlightIds,
+  giveRookCapturesIds,
+} from "../Helper/commonHelper.js";
+import { checkSquareCaptureId } from "../Helper/commonHelper.js";
+import { checkPieceOfOpponentOnElement } from "../Helper/commonHelper.js";
+import { giveKingCaptureIds } from "../Helper/commonHelper.js";
+import { giveQueenCapturesIds } from "../Helper/commonHelper.js";
+import { checkWeatherPieceExistsOrNot } from "../Helper/commonHelper.js";
+import {
+  giveRookHighlightIds,
+  giveBishopCaptureIds,
+} from "../Helper/commonHelper.js";
+import { giveKnightCaptureIds } from "../Helper/commonHelper.js";
+import {
+  giveKingHighlightIds,
+  giveKnightHighlightIds,
+} from "../Helper/commonHelper.js";
+import { giveQueenHighlightIds } from "../Helper/commonHelper.js";
+import { ROOT_DIV } from "../Helper/constants.js";
+import { clearHightlight } from "../Render/main.js";
+import { selfHighlight } from "../Render/main.js";
+import { globalStateRender } from "../Render/main.js";
+import { globalState, keySquareMapper } from "../index.js";
+import { globalPiece } from "../Render/main.js";
+import pawnPromotion from "../Helper/modalCreator.js";
+import HypotheticalClass from "../Others/HypotheticalBoard.js";
+import HypotheticalBoard from "../Others/HypotheticalBoard.js";
+
+// hightlighted or not => state
+let hightlight_state = false;
+let inTurn = "white";
+let whoInCheck = null;
+
+function changeTurn() {
+  inTurn = inTurn === "white" ? "black" : "white";
+}
+
+function checkForCheck() {
+  if (inTurn === "black") {
+    const whiteKingCurrentPosition = globalPiece.white_king.current_position;
+    const knight_1 = globalPiece.black_knight_1.current_position;
+    const knight_2 = globalPiece.black_knight_2.current_position;
+    const king = globalPiece.black_king.current_position;
+    const bishop_1 = globalPiece.black_bishop_1.current_position;
+    const bishop_2 = globalPiece.black_bishop_2.current_position;
+    const rook_1 = globalPiece.black_rook_1.current_position;
+    const rook_2 = globalPiece.black_rook_2.current_position;
+    const queen = globalPiece.black_queen.current_position;
+
+    let finalCheckList = [];
+    finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
+    finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
+    finalCheckList.push(giveKingCaptureIds(king, inTurn));
+    finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
+    finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
+    finalCheckList.push(giveRookCapturesIds(rook_1, inTurn));
+    finalCheckList.push(giveRookCapturesIds(rook_2, inTurn));
+    finalCheckList.push(giveQueenCapturesIds(queen, inTurn));
+
+    finalCheckList = finalCheckList.flat();
+    const checkOrNot = finalCheckList.find(
+      (element) => element === whiteKingCurrentPosition
+    );
+
+    if (checkOrNot) {
+      whoInCheck = "white";
+    }
+  } else {
+    const blackKingCurrentPosition = globalPiece.black_king.current_position;
+    const knight_1 = globalPiece.white_knight_1.current_position;
+    const knight_2 = globalPiece.white_knight_2.current_position;
+    const king = globalPiece.white_king.current_position;
+    const bishop_1 = globalPiece.white_bishop_1.current_position;
+    const bishop_2 = globalPiece.white_bishop_2.current_position;
+    const rook_1 = globalPiece.white_rook_1.current_position;
+    const rook_2 = globalPiece.white_rook_2.current_position;
+    const queen = globalPiece.white_queen.current_position;
+
+    let finalCheckList = [];
+    finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
+    finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
+    finalCheckList.push(giveKingCaptureIds(king, inTurn));
+    finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
+    finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
+    finalCheckList.push(giveRookCapturesIds(rook_1, inTurn));
+    finalCheckList.push(giveRookCapturesIds(rook_2, inTurn));
+    finalCheckList.push(giveQueenCapturesIds(queen, inTurn));
+
+    finalCheckList = finalCheckList.flat();
+    const checkOrNot = finalCheckList.find(
+      (element) => element === blackKingCurrentPosition
+    );
+
+    if (checkOrNot) {
+      whoInCheck = "black";
     }
   }
-  
-  function captureInTurn(square) {
-    const piece = square.piece;
-  
-    if (piece == selfHighlightState) {
-      clearPreviousSelfHighlight(selfHighlightState);
-      clearHighlightLocal();
-      return;
+}
+
+// NEUE ENDGAME-FUNKTION
+function endGame(winningColor) {
+  alert(`${winningColor} wins! Game Over.`);
+  // Hier kannst du das Spielfeld blockieren oder andere Spielend-Mechaniken hinzufügen
+}
+
+// ANPASSUNG IN MOVE-ELEMENT
+function moveElements(piece, id, castle) {
+  const pawnIsPromoted = checkForPawnPromotion(piece, id);
+
+  if (piece.piece_name.includes("KING") || piece.piece_name.includes("ROOK")) {
+    piece.move = true;
+
+    if (piece.piece_name.includes("KING") && piece.piece_name.includes("BLACK")) {
+      if (id === "c8" || id === "g8") {
+        let rook = keySquareMapper[id === "c8" ? "a8" : "h8"];
+        moveElements(rook.piece, id === "c8" ? "d8" : "f8", true);
+      }
     }
-  
-    if (square.captureHighlight) {
-      // movePieceFromXToY();
-      moveElement(selfHighlightState, piece.current_position);
-      clearPreviousSelfHighlight(selfHighlightState);
-      clearHighlightLocal();
-      return;
+
+    if (piece.piece_name.includes("KING") && piece.piece_name.includes("WHITE")) {
+      if (id === "c1" || id === "g1") {
+        let rook = keySquareMapper[id === "c1" ? "a1" : "h1"];
+        moveElements(rook.piece, id === "c1" ? "d1" : "f1", true);
+      }
     }
-  
+  }
+
+  // Prüfen, ob ein König geschlagen wurde
+  const targetSquare = keySquareMapper[id];
+  if (targetSquare.piece && targetSquare.piece.piece_name.includes("KING")) {
+    endGame(inTurn === "white" ? "White" : "Black");
+    return;  // Spielende, keine weiteren Züge
+  }
+
+  const flatData = globalState.flat();
+  flatData.forEach((el) => {
+    if (el.id == piece.current_position) {
+      delete el.piece;
+    }
+    if (el.id == id) {
+      if (el.piece) {
+        el.piece.current_position = null;
+      }
+      el.piece = piece;
+    }
+  });
+
+  clearHightlight();
+  const previousPiece = document.getElementById(piece.current_position);
+  piece.current_position = null;
+  previousPiece?.classList?.remove("highlightYellow");
+  const currentPiece = document.getElementById(id);
+  currentPiece.innerHTML = previousPiece?.innerHTML;
+  if (previousPiece) previousPiece.innerHTML = "";
+  piece.current_position = id;
+
+  if (pawnIsPromoted) {
+    pawnPromotion(inTurn, callbackPawnPromotion, id);
+  }
+
+  checkForCheck();
+
+  if (!castle) {
+    changeTurn();
+  }
+}
+
+function captureInTurn(square) {
+  const piece = square.piece;
+
+  if (piece == selfHighlightState) {
+    clearPreviousSelfHighlight(selfHighlightState);
+    clearHighlightLocal();
     return;
   }
+
+  if (square.captureHighlight) {
+    moveElements(selfHighlightState, piece.current_position);
+    clearPreviousSelfHighlight(selfHighlightState);
+    clearHighlightLocal();
+    return;
+  }
+
+  return;
+}
   
   function checkForPawnPromotion(piece, id) {
     if (inTurn === "white") {
@@ -1121,6 +1188,9 @@ import {
       clearHighlightLocal();
       return;
     }
+    if(!blackKing){
+      alert("Weiß gewinnt");
+    }
   
     // clear all highlights
     clearPreviousSelfHighlight(selfHighlightState);
@@ -1423,7 +1493,13 @@ import {
       selfHighlightState = null;
     }
   }
-  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!giveKingHighlightIds){
+  alert("Game over")
+}
+
+// Dein bestehender Code geht hier weiter...
+
   // // black pawn event
   
   function GlobalEvent() {
@@ -1492,5 +1568,10 @@ import {
       }
     });
   }
+
+  /////////////////////////////////////////////////////////////////////
+
+
+  
   
   export { GlobalEvent, movePieceFromXToY };
